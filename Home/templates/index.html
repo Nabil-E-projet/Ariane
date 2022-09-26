@@ -1,0 +1,92 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block title %} ARIANE
+{%endblock%}
+{% block content %}
+
+<body
+  class="hold-transition light-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed"
+>
+  <div class="wrapper" style="width: 80%; padding-left: 200px">
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>GuestBook</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Accueil</a></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="timeline">
+              <div class="time-label">
+                <span class="bg-red">25 Septembre 2022</span>
+              </div>
+
+              <div>
+                <i class="fas fa-history bg-blue"></i>
+                <div class="timeline-item">
+                  <h3 class="timeline-header">
+                    <a href="#">Projet Nabil ERRAHMANI </a>
+                  </h3>
+
+                  <div class="timeline-body">Veuillez laisser un message</div>
+                  <div class="timeline-footer">
+                    <form action="{% url 'dashboard' %}" method="post">
+                      {%csrf_token%}
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          name="name"
+                          class="form-control"
+                          placeholder="Entrez votre nom"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <textarea
+                          name="comments"
+                          class="form-control"
+                          placeholder="Ajoutez un message"
+                        ></textarea>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary">
+                        Laisser un message
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+
+              {% for item in all_comments %}
+              <div>
+                <i class="fas fa-comments bg-yellow"></i>
+                <div class="timeline-item">
+                  <span class="time"
+                    ><i class="fas fa-clock"></i> {{ item.created_at }}</span
+                  >
+                  <h3 class="timeline-header">
+                    <a href="#">{{ item.name }}</a> a laissé un message
+                  </h3>
+                  <div class="timeline-body">{{ item.comments }}</div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+
+{% endblock %}
